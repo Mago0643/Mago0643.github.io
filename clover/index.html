@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>🍀</title>
+    <link rel="icon" href="clov.png" sizes="40x36">
+    <style>
+      body {
+        background: black;
+      }
+
+      h2 {
+        color: white;
+        text-align: center;
+      }
+
+      h2#spy {
+        color: black;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="txt1">This is Clover.</h2>
+    <div style="text-align: center">
+      <img src="speed.gif" id="colver">
+    </div>
+    <h2 id="txt2">Please Say Hi to them.</h2>
+    <h2 id="txt3">please im begging you to say hi to this creature</h2>
+    <div style="text-align: center;">
+      <button id="hiButton">Hi!</button>
+    </div>
+    <!-- This is nothing. yeah thats it -->
+    <h2 id="spy">You found the Secret Text!</h2>
+
+    <script>
+      let butt = document.getElementById('hiButton');
+      let text = document.getElementById('txt1');
+      let text2 = document.getElementById('txt2');
+      let text3 = document.getElementById('txt3');
+      let spy = document.getElementById('spy');
+      butt.onclick = function()
+      {
+        butt.remove();
+        text2.remove();
+        text3.remove();
+        text.textContent = "Thanks! '-'";
+        text.style.color = 'yellow';
+        document.body.style.background = spy.style.color = 'rgb(10, 10, 0)';
+      };
+    </script>
+  </body>
+</html>
