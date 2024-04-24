@@ -37,6 +37,7 @@
       let text2 = document.getElementById('txt2');
       let text3 = document.getElementById('txt3');
       let spy = document.getElementById('spy');
+      let txt = document.getElementById('hyperlink');
       butt.onclick = function()
       {
         butt.remove();
@@ -44,7 +45,7 @@
         text3.remove();
         text.textContent = "Thanks! '-'";
         text.style.color = 'yellow';
-        document.body.style.background = spy.style.color = 'rgb(10, 10, 0)';
+        text2.style.color = 'rgb(155, 155, 0)';
       };
     </script>
   </body>
