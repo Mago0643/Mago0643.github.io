@@ -66,7 +66,7 @@ function checkGenocide()
 
       close();
     } else {
-      switch (genoCount)
+      /*switch (genoCount)
       {
         case 0:
           alert('* No, I don\'t Want to.');
@@ -101,7 +101,11 @@ function checkGenocide()
           console.log('* Are you having Fun yet?');
           break;
       }
-      genoCount++;
+      genoCount++;*/
+      alert('* ...');
+      cannotPress = false;
+      notGenocide = false;
+      checkGenocide();
     }
   }
 }
