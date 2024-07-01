@@ -1,0 +1,104 @@
+@keyframes firstAnim {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+@keyframes secondAnim {
+  from {
+    top: 500px;
+    opacity: 0;
+  }
+  to {
+    top: 0px;
+    opacity: 1;
+  }
+}
+
+body {
+  background: black;
+  overflow-x: hidden;
+}
+
+.text {
+  color: white;
+}
+
+.text2 {
+  color: blue;
+}
+
+h1 {
+  font-family: 'Do Hyeon', 'Courier New', Courier, monospace;
+  opacity: 0;
+  animation-name: firstAnim;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation-delay: 0.25s;
+  animation-fill-mode: both;
+  animation-duration: 1.5s;
+}
+
+div#game {
+  opacity: 0;
+  border: 5px ridge;
+  border-color: rgb(125, 175, 60);
+  background-color: gray;
+  display: flex;
+  flex-direction: column;
+  border-width: 10px;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  animation-name: secondAnim;
+  animation-delay: 1.75s;
+  animation-duration: 1.5s;
+  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  animation-fill-mode: both;
+}
+
+.FNAF2 {
+  right: 25%;
+  position: relative;
+  background-color: darkgoldenrod;
+  display: flex; 
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.undertale {
+  left: 25%;
+  position: relative;
+  background-color: black;
+  display: flex; 
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  bottom: 252.5px;
+}
+
+.game {
+  align-items: center;
+  text-align: center;
+}
+
+.kmeme {
+  background: rgb(0, 125, 0);
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.memes {
+  background: darkcyan;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
