@@ -1,0 +1,34 @@
+:root {
+  --background-color: rgb(125, 125, 0);
+}
+
+body {
+  background: var(--background-color);
+  overflow: hidden;
+}
+
+h2 {
+  color: black;
+  text-align: center;
+}
+
+h2#spy {
+  color: var(--background-color);
+  text-align: left;
+}
+
+h2#genocide {
+  color: rgb(5, 5, 0);
+  text-align:center;
+  visibility: hidden;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
