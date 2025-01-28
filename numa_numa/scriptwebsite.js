@@ -1,7 +1,15 @@
+// can use on any website (excludes for twitter and other site that i dont know)
+// copy paste it to console.
+
 const bps = 60/130;
 const offset = -0.053;
-const gif = document.getElementById('mvv');
-const song = document.getElementById('song');
+const song = document.createElement("audio");
+song.loop = true;
+song.src = "https://mago0643.github.io/numa_numa/audio.ogg";
+song.type = "audio/ogg";
+document.body.appendChild(song);
+
+let ogTitle = document.title;
 
 function generateRandomNumber(min, max, last)
 {
@@ -72,16 +80,9 @@ setInterval(function()
         document.body.style.background = "";
         document.body.style.scale = "";
         document.body.style.transform = "";
-        document.title = "???";
+        document.title = ogTitle;
         if (lyrics.length == 0)
           lyrics = generateLyrics();
-      }
-
-      if (lastBeat == 0)
-      {
-        gif.src = '';
-        gif.src = 'GB.gif';
-        gif.style.display = "";
       }
     }
 
@@ -107,9 +108,9 @@ setInterval(function()
     {
       let ok = 1+easeBounce(beat%1)*0.5;
       let rot = Math.sin(beat * Math.PI)*15;
-      let rotX = -Math.sin(beat * Math.PI) * 180;
+      let rotX = -Math.sin(beat * Math.PI) * 45;
       let x = Math.sin(beat * Math.PI) * 100;
-      document.body.style.transform = `rotate(${rot}deg) rotate3d(0,1,0,${rotX}deg) translateX(${x}px) scale(${ok})`;
+      document.body.style.transform = `rotate(${rot}deg) rotate3d(1,0,0,${rotX}deg) translateX(${x}px) scale(${ok})`;
       
       let t = 25+easeOutExpo(beat/2%0.5)*25;
       document.body.style.background = `hsl(${_lastCol}, 100%, ${t}%)`;
@@ -122,11 +123,4 @@ setInterval(function()
     }
   }
 }, 1)
-
-document.onkeydown = function(e)
-{
-  if (song.paused && e.key == " ") {
-    song.play();
-    gif.style.display = "";
-  }
-}
+song.play();
