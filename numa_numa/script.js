@@ -22,6 +22,7 @@ const colArray = [
   'yellowgreen'
 ];
 
+const video = null;
 const bps = 60/130;
 const offset = -0.053;
 const gif = document.getElementById('mvv');
