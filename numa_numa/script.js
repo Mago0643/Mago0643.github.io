@@ -111,6 +111,7 @@ setInterval(function()
       {
         gif.src = '';
         gif.src = 'GB.gif';
+        gif.style.display = "";
       }
     }
 
