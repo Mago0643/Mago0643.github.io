@@ -25,6 +25,7 @@ const colArray = [
 const bps = 60/130;
 const offset = -0.053;
 const gif = document.getElementById('mvv');
+const song = document.getElementById('song');
 
 function chooseRandomColor(lastColor)
 {
@@ -82,9 +83,9 @@ let _lastCol = "white";
 let lyrics = generateLyrics();
 setInterval(function()
 {
-  if (!video.paused)
+  if (!song.paused)
   {
-    let beat = ((video.currentTime + offset) / bps).toFixed(3);
+    let beat = ((song.currentTime + offset) / bps).toFixed(3);
     if (lastBeat != Math.floor(beat))
     {
       lastBeat = Math.floor(beat);
@@ -149,7 +150,7 @@ setInterval(function()
 
 document.onkeydown = function(e)
 {
-  if (video.paused && e.key == " ") {
-    video.play();
+  if (song.paused && e.key == " ") {
+    song.play();
   }
 }
