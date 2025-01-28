@@ -106,15 +106,20 @@ setInterval(function()
 
     if (beat >= 35 && beat < 59)
     {
-      let ok = 1+easeBounce(beat%1)*0.5;
+      let ok = 1+easeBounce(beat%1)*0.75;
       let rot = Math.sin(beat * Math.PI)*15;
-      let rotX = -Math.sin(beat * Math.PI) * 45;
-      let x = Math.sin(beat * Math.PI) * 100;
-      document.body.style.transform = `rotate(${rot}deg) rotate3d(1,0,0,${rotX}deg) translateX(${x}px) scale(${ok})`;
+      let x = Math.sin(beat * Math.PI*2) * 100;
+      document.body.style.transform = `rotate(${rot}deg)`;
+      if (lastBeat % 2 == 0) {
+        document.body.style.transform += ` translateX(${x*2}px) scaleX(${ok}) scaleY(1)`;
+      } else {
+        document.body.style.transform += ` translateY(${x}px) scaleY(${ok}) scaleX(1)`;
+      }
       
       let t = 25+easeOutExpo(beat/2%0.5)*25;
       document.body.style.background = `hsl(${_lastCol}, 100%, ${t}%)`;
-    }
+    } else if (beat >= 59 && beat < 60)
+      document.body.style.background = "";
 
     if ((beat >= 60 && beat < 62) || (beat >= 62 && beat < 64))
     {

@@ -118,7 +118,8 @@ setInterval(function()
       
       let t = 25+easeOutExpo(beat/2%0.5)*25;
       document.body.style.background = `hsl(${_lastCol}, 100%, ${t}%)`;
-    }
+    } else if (beat >= 59 && beat < 60)
+      document.body.style.background = "";
 
     if ((beat >= 60 && beat < 62) || (beat >= 62 && beat < 64))
     {
