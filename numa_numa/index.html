@@ -10,13 +10,9 @@
 </head>
 <body style="overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; scale: 1">
   <div id="canvasHandler" style="max-width: 100%; max-height: 100; object-fit: cover;">
-    <canvas id="canvas"></canvas>
+    <img id="mvv" src="GB.gif">
   </div>
-
-  <video id="video" width="1280" height="720" style="display: contents; top: 1000vh" src="GB.mp4" loop controls controlsList="nodownload nofullscreen">
-    <source src="GB.mp4" type="video/mp4">
-  </video>
-
+  <video id="video" width="1280" height="720" style="display: contents; top: 1000vh" src="GB.mp4" loop controls controlsList="nodownload nofullscreen" autoplay type="video/mp4"></video>
   <script src="script.js"></script>
 </body>
 </html>

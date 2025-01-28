@@ -1,7 +1,3 @@
-const canvas = document.getElementById("canvas");
-const gl = canvas.getContext("webgl");
-const video = document.getElementById("video");
-const canvasHandler = document.getElementById("canvasHandler");
 const colArray = [
   'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'black', 
   'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 
@@ -28,6 +24,7 @@ const colArray = [
 
 const bps = 60/130;
 const offset = -0.053;
+const gif = document.getElementById('mvv');
 
 function chooseRandomColor(lastColor)
 {
@@ -107,6 +104,12 @@ setInterval(function()
         if (lyrics.length == 0)
           lyrics = generateLyrics();
       }
+
+      if (lastBeat == 0)
+      {
+        gif.src = '';
+        gif.src = 'GB.gif';
+      }
     }
 
     for (let i = 0; i < lyrics.length; i++)
@@ -144,136 +147,9 @@ setInterval(function()
   }
 }, 1)
 
-canvas.width = video.videoWidth;
-canvas.height = video.videoHeight;
-
 document.onkeydown = function(e)
 {
   if (video.paused && e.key == " ") {
     video.play();
   }
 }
-
-// GLSL 셰이더 코드
-const vertexShaderSource = `
-  attribute vec2 a_position;
-  attribute vec2 a_texCoord;
-  varying vec2 v_texCoord;
-
-  void main() {
-    gl_Position = vec4(a_position, 0, 1);
-    v_texCoord = a_texCoord;
-  }
-`;
-
-const fragmentShaderSource = `
-  precision mediump float;
-  varying vec2 v_texCoord;
-  uniform sampler2D u_texture;
-
-  #define threshold 0.55
-  #define padding 0.05
-
-  // https://www.shadertoy.com/view/XsfGzn
-  void main() {
-    vec2 uv = v_texCoord;
-    
-    vec4 greenScreen = vec4(0.,1.,0.,1.);
-    vec4 color = texture2D(u_texture, uv);
-
-    vec3 diff = color.xyz - greenScreen.xyz;
-    float fac = smoothstep(threshold-padding,threshold+padding, dot(diff,diff));
-
-    gl_FragColor = mix(color, vec4(0.0, 0.0, 0.0, 0.0), 1.-fac);
-  }
-`;
-
-// 셰이더 생성 함수
-function createShader(gl, type, source) {
-  const shader = gl.createShader(type);
-  gl.shaderSource(shader, source);
-  gl.compileShader(shader);
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    console.error(gl.getShaderInfoLog(shader));
-    gl.deleteShader(shader);
-    return null;
-  }
-  return shader;
-}
-
-// 프로그램 생성 함수
-function createProgram(gl, vertexShader, fragmentShader) {
-  const program = gl.createProgram();
-  gl.attachShader(program, vertexShader);
-  gl.attachShader(program, fragmentShader);
-  gl.linkProgram(program);
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    console.error(gl.getProgramInfoLog(program));
-    gl.deleteProgram(program);
-    return null;
-  }
-  return program;
-}
-
-// 셰이더 및 프로그램 초기화
-const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-const program = createProgram(gl, vertexShader, fragmentShader);
-
-// 정점 데이터 설정
-const positionBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-  -1, -1,
-   1, -1,
-  -1,  1,
-   1,  1,
-]), gl.STATIC_DRAW);
-
-const texCoordBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-  0, 1,
-  1, 1,
-  0, 0,
-  1, 0,
-]), gl.STATIC_DRAW);
-
-// 텍스처 초기화
-const texture = gl.createTexture();
-gl.bindTexture(gl.TEXTURE_2D, texture);
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-
-// 애니메이션 루프
-let hasRendered = false;
-function render() {
-  if (true) {
-    hasRendered = true;
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
-
-    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    gl.useProgram(program);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    const positionLocation = gl.getAttribLocation(program, "a_position");
-    gl.enableVertexAttribArray(positionLocation);
-    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
-    const texCoordLocation = gl.getAttribLocation(program, "a_texCoord");
-    gl.enableVertexAttribArray(texCoordLocation);
-    gl.vertexAttribPointer(texCoordLocation, 2, gl.FLOAT, false, 0, 0);
-
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-  }
-  requestAnimationFrame(render);
-}
-
-video.addEventListener("play", () => {
-  render();
-});
