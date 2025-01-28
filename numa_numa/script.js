@@ -153,5 +153,6 @@ document.onkeydown = function(e)
 {
   if (song.paused && e.key == " ") {
     song.play();
+    gif.style.display = "";
   }
 }
