@@ -1,8 +1,10 @@
 const bps = 60/130;
 const offset = -0.053;
-const gif = document.getElementById('mvv');
+const gif = document.getElementsByClassName('sim');
 const song = document.getElementById('song');
 const tip = document.getElementById('tip');
+
+let ogPos = [];
 
 function generateRandomNumber(min, max, last)
 {
@@ -21,6 +23,16 @@ function easeOutExpo(t)
 function easeBounce(t)
 {
   return -Math.pow(t * 2 - 1, 2) + 1;
+}
+
+function easeInOutExpo(t)
+{
+  return t == 0
+    ? 0
+    : t == 1
+    ? 1
+    : t < 0.5 ? Math.pow(2, 20 * t - 10) / 2
+    : (2 - Math.pow(2, -20 * t + 10)) / 2;
 }
 
 function generateLyrics()
@@ -80,9 +92,13 @@ setInterval(function()
 
       if (lastBeat == 0)
       {
-        gif.src = '';
-        gif.src = 'GB.gif';
-        gif.style.display = "";
+        for (let i = 0; i < gif.length; i++)
+        {
+          gif[i].src = '';
+          gif[i].src = 'GB.gif';
+          gif[i].style.display = "";
+          gif[i].style.transform = `translateX(${ogPos[i]}px)`;
+        }
       }
     }
 
@@ -102,6 +118,8 @@ setInterval(function()
     {
       let t = (35-beat)/4;
       document.body.style.background = `rgb(${t*255}, ${t*255}, ${t*255})`;
+      for (let i = 0; i < gif.length; i++)
+        gif[i].style.transform = `translateX(${ogPos[i]*easeInOutExpo(t)}px)`;
     }
 
     if (beat >= 35 && beat < 59)
@@ -118,8 +136,16 @@ setInterval(function()
       
       let t = 25+easeOutExpo(beat/2%0.5)*25;
       document.body.style.background = `hsl(${_lastCol}, 100%, ${t}%)`;
-    } else if (beat >= 59 && beat < 60)
-      document.body.style.background = "";
+      for (let i = 0; i < gif.length; i++)
+      {
+        let cock = Math.sin(beat * Math.PI + i) * 15;
+        gif[i].style.transform = `translateX(${600*(beat%1)}px) rotate(${cock}deg)`;
+      }
+    } else if (beat >= 59 && beat < 60) {
+      document.body.style.transform = "";
+      for (let i = 0; i < gif.length; i++)
+        gif[i].style.transform = "";
+    }
 
     if ((beat >= 60 && beat < 62) || (beat >= 62 && beat < 64))
     {
@@ -133,7 +159,21 @@ document.onkeydown = function(e)
 {
   if (song.paused && e.key == " ") {
     song.play();
-    gif.style.display = "";
-    tip.style.display = "none";
+    for (let j = 0; j < gif.length; j++)
+    {
+      gif[j].style.display = "";
+      if (gif.length/2-j >= 0)
+      {
+        let x = 600*(gif.length/2-j)-300;
+        ogPos.push(x);
+        gif[j].style.transform = `translateX(${x}px)`;
+      } else {
+        let wtf = (5-j)*300;
+        ogPos.push((-300*j)+wtf);
+        console.log((-300*j)+wtf);
+        gif[j].style.transform = `translateX(${(-300*j)+wtf}px)`;
+      }
+    }
+    document.body.removeChild(tip)
   }
 }
