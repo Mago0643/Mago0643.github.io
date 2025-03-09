@@ -4,6 +4,7 @@ const gif = document.getElementsByClassName('sim');
 const song = document.getElementById('song');
 const tip = document.getElementById('tip');
 
+
 let ogPos = [];
 
 function generateRandomNumber(min, max, last)
@@ -33,6 +34,11 @@ function easeInOutExpo(t)
     ? 1
     : t < 0.5 ? Math.pow(2, 20 * t - 10) / 2
     : (2 - Math.pow(2, -20 * t + 10)) / 2;
+}
+
+function easeInOutSine(x)
+{
+  return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
 }
 
 function generateLyrics()
@@ -85,7 +91,7 @@ setInterval(function()
         document.body.style.background = "";
         document.body.style.scale = "";
         document.body.style.transform = "";
-        document.title = "???";
+        document.title = "";
         if (lyrics.length == 0)
           lyrics = generateLyrics();
       }
@@ -119,7 +125,7 @@ setInterval(function()
       let t = (35-beat)/4;
       document.body.style.background = `rgb(${t*255}, ${t*255}, ${t*255})`;
       for (let i = 0; i < gif.length; i++)
-        gif[i].style.transform = `translateX(${ogPos[i]*easeInOutExpo(t)}px)`;
+        gif[i].style.transform = `translateX(${ogPos[i]*easeInOutExpo(t)}px)`; 
     }
 
     if (beat >= 35 && beat < 59)
@@ -139,7 +145,7 @@ setInterval(function()
       for (let i = 0; i < gif.length; i++)
       {
         let cock = Math.sin(beat * Math.PI + i) * 15;
-        gif[i].style.transform = `translateX(${600*(beat%1)}px) rotate(${cock}deg)`;
+        gif[i].style.transform = `translateX(${600*easeInOutSine(beat%1)}px) rotate(${cock}deg)`;
       }
     } else if (beat >= 59 && beat < 60) {
       document.body.style.transform = "";
@@ -159,19 +165,20 @@ document.onkeydown = function(e)
 {
   if (song.paused && e.key == " ") {
     song.play();
+    let mul = 2;
     for (let j = 0; j < gif.length; j++)
     {
       gif[j].style.display = "";
       if (gif.length/2-j >= 0)
       {
-        let x = 600*(gif.length/2-j)-300;
+        let x = (600*(gif.length/2-j)-300);
         ogPos.push(x);
         gif[j].style.transform = `translateX(${x}px)`;
       } else {
         let wtf = (5-j)*300;
-        ogPos.push((-300*j)+wtf);
-        console.log((-300*j)+wtf);
-        gif[j].style.transform = `translateX(${(-300*j)+wtf}px)`;
+        let y = ((-300*j)+wtf);
+        ogPos.push(y);
+        gif[j].style.transform = `translateX(${y}px)`;
       }
     }
     document.body.removeChild(tip)
