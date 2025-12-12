@@ -66,42 +66,6 @@ function checkGenocide()
 
       close();
     } else {
-      /*switch (genoCount)
-      {
-        case 0:
-          alert('* No, I don\'t Want to.');
-          break;
-        case 1:
-          alert('* I SAID, I don\'t want to do that.');
-          break;
-        case 2:
-          alert('* ...');
-          break;
-        case 3:
-          alert('* Don\'t you have better things to do?');
-          break;
-        case 4:
-          alert('* I want to have a happy, fun life.');
-          alert('* Can you Please let that happen?')
-          alert('* ...')
-          break;
-        case 5:
-          alert('* Hey, You\'re Wasting time for this.');
-          alert('* So Please, go away!');
-          break;
-        case 6:
-          alert('* Hey, do you hear that?');
-          alert('* I\'M');
-          alert('* I\'M  I N S I D E');
-          alert('* I\'M  I N S I D E  Y O U R');
-          alert('* I\'M  I N S I D E  Y O U R  W A L L S .');
-          cannotPress = false;
-          notGenocide = false;
-          checkGenocide();
-          console.log('* Are you having Fun yet?');
-          break;
-      }
-      genoCount++;*/
       alert('* ...');
       cannotPress = false;
       notGenocide = false;
